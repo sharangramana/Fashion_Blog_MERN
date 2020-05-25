@@ -1,0 +1,103 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+a {
+    text-decoration: none !important;
+}
+.box {
+    margin-top: 70px;
+    overflow-y: auto;
+}
+.signupbox {
+    margin-top: 0px;
+    overflow-y: hidden;
+}
+
+
+h2 {
+    font-size: 50px;
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 60px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.col-md-5 {
+    background : rgba(0,0,0,0.5);
+    color: white;
+    padding-bottom: 0.1px;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+
+.label {
+    font-size: 20px;
+    font-weight: normal;
+}
+.control-label {
+    text-align: left;
+}
+
+.input-group {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.input-group-addon{
+    background: transparent;
+    border-radius: 0px;
+    border: 0px;
+    border-bottom: 1px solid grey;
+    font-size: 18px;
+    color: rgb(233, 233, 233);
+    margin-left: 3px;
+}
+
+input[type="text"]
+{
+    background: rgba(0, 0, 0, 0.5) !important;
+    border: none !important;
+    outline: none !important;
+    border-bottom: 1.5px solid grey !important;   
+    box-shadow: none !important; 
+}
+
+.fa {
+    margin: 5px;
+    margin-top: 12px;
+}
+
+.form-control  {
+    height: calc(1.0em + .50rem + 1px);
+    position: 5px;
+    border: 0px;
+    border-radius: 0px;
+    border-bottom: 1px solid grey;
+    padding: 15px;
+    font-size: 21px;
+}
+
+
+input[type="checkbox"] {
+    height: 15px;
+    width: 15px;
+    text-align: left;
+}
+small {
+    padding-left: 5px;
+    font-size: 18px;
+    color: white;
+    text-align: left;
+}
+p {
+    font-size: 18px;
+    color: white;
+}
+
+.signup {
+    color: yellowgreen;
+}
