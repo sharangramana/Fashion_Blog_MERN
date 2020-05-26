@@ -33,7 +33,7 @@ export default class Login extends Component {
                      </div>
                      <a href="."><div className="btn btn-light btn-block">SIGN IN</div></a> <br/>
                      <Link to="/signup">
-                     <p clas="text-center">Not a member yet? <a href="/signup" className="signup">Sign Up</a></p>
+                     <p clas="text-center">Not a member yet? Sign Up</p>
                      </Link>
                   </div>
                   <div className="col-md-2">

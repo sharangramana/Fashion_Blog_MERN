@@ -17,7 +17,7 @@ export default class Nav extends Component {
                         <ul className="navbar-nav mr-auto">
                             <Link to="/">
                                 <li className="nav-item active">
-                                    <a className="nav-link text-white" href=".">Home <span className="sr-only">(current)</span></a>
+                                    <p className="nav-link text-white" >Home <span className="sr-only">(current)</span></p>
                                 </li>
                             </Link>
                             <li className="nav-item">
@@ -36,7 +36,7 @@ export default class Nav extends Component {
                             </li>
                             <Link to="/login">
                                 <li className="nav-item">
-                                <a className="nav-link text-white" href="." aria-disabled="true">Login</a>
+                                <p className="nav-link text-white" aria-disabled="true">Login</p>
                                 </li>
                             </Link>
                         </ul>

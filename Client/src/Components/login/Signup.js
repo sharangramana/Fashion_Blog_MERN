@@ -32,8 +32,13 @@ export default class Signup extends Component {
         numberValid: false,
         formValid: false,
 
-        errorMsg : {}
+        errorMsg : {},
+        responsemessage : ""
     }
+
+    // componentDidMount() {
+    //     this.handlebutton()
+    // }
 
     validateForm = () => {
         console.log(this.state);
@@ -43,11 +48,23 @@ export default class Signup extends Component {
         })
     }
 
+    handlebutton = (event) => {
+        event.preventDefault()
+
+        fetch("http://localhost:5000/signupresponse")
+        .then(res => res.text())
+        .then(res => this.setState({responsemessage: res}))
+        .catch(err => err)
+
+        window.location.href = "http://localhost:3000/"
+        event.returnValue = ''
+    }
+
     handleChange = (event) => {
         const{name, value} = event.target
 
         if (name === "userName") this.validateName(value)
-        if (name === "email") this.validateEmail(value)
+        if (name === "email") this.validateEmail(value) 
         if (name === "number") this.validateNumber(value)   
         if (name === "password") this.validatePassword(value) 
         if (name === "reEnterPassword") this.validateReEnterPassword(value) 
@@ -134,100 +151,105 @@ export default class Signup extends Component {
         return (
             <div className="container signupbox">
             <div className = "row">
-                <div className="col"> <form>
-                    <div className="col-md-5">
-                        <h2 className="text-center">SIGN UP</h2>
+                <div className="col"> 
+                    <form >
+                        <div className="col-md-5">
+                            <h2 className="text-center">SIGN UP</h2>
 
-                        <p className="label control-label text-white">Name</p>
-                        <div className="input-group">
-                            <span className="input-group-addon">
-                                <span className="fa fa-user"></span>
-                            </span>
-                            <input 
-                                type="text" 
-                                className="form-control is-invalid" 
-                                name="userName" 
-                                value = {this.state.userName}
-                                placeholder="Name"
-                                onChange = {this.handleChange}
-                                required
-                            />
-                            <ValidationMessage valid = {this.state.userNameValid} msg = {this.state.errorMsg.userName}/>
-                        </div>
-                        
+                            <p className="label control-label text-white">Name</p>
+                            <div className="input-group">
+                                <span className="input-group-addon">
+                                    <span className="fa fa-user"></span>
+                                </span>
+                                <input 
+                                    type="text" 
+                                    className="form-control is-invalid" 
+                                    name="userName" 
+                                    value = {this.state.userName}
+                                    placeholder="Name"
+                                    onChange = {this.handleChange}
+                                    required
+                                />
+                                <ValidationMessage valid = {this.state.userNameValid} msg = {this.state.errorMsg.userName}/>
+                            </div>
+                            
 
-                        <p className="label control-label text-white">E-mail</p>
-                        <div className="input-group">
-                            <span className="input-group-addon">
-                                <span className="fa fa-envelope"></span>
-                            </span>
-                            <input 
-                                type="text" 
-                                className="form-control is-invalid" 
-                                name="email" 
-                                value = {this.state.email}
-                                placeholder="E-mail"
-                                onChange= {this.handleChange}
-                                required
-                            />
-                            <ValidationMessage valid = {this.state.emailValid} msg = {this.state.errorMsg.email}/>
+                            <p className="label control-label text-white">E-mail</p>
+                            <div className="input-group">
+                                <span className="input-group-addon">
+                                    <span className="fa fa-envelope"></span>
+                                </span>
+                                <input 
+                                    type="text" 
+                                    className="form-control is-invalid" 
+                                    name="email" 
+                                    value = {this.state.email}
+                                    placeholder="E-mail"
+                                    onChange= {this.handleChange}
+                                    required
+                                />
+                                <ValidationMessage valid = {this.state.emailValid} msg = {this.state.errorMsg.email}/>
+                            </div>
+                            
+                            <p className="label control-label text-white">Contact No</p>
+                            <div className="input-group">
+                                <span className="input-group-addon">
+                                    <span className="fa fa-phone"></span>
+                                </span>
+                                <input 
+                                    type="text" 
+                                    className="form-control is-invalid"    
+                                    name="number" 
+                                    value = {this.state.number}
+                                    placeholder="Phone"
+                                    onChange = {this.handleChange}
+                                    required
+                                />
+                                <ValidationMessage valid = {this.state.numberValid} msg = {this.state.errorMsg.number}/>
+                            </div>
+                            
+                            <p className="label control-label text-white">Password</p>
+                            <div className="input-group">
+                                <span className="input-group-addon"><link rel="stylesheet" href=""/><span className="fa fa-lock"></span></span>
+                                <input 
+                                    type="text" 
+                                    className="form-control is-invalid" 
+                                    name="password"
+                                    value = {this.state.password} 
+                                    placeholder="Password"
+                                    onChange = {this.handleChange}
+                                    required
+                                />
+                                <ValidationMessage valid = {this.state.passwordValid} msg = {this.state.errorMsg.password}/>
+                            </div>
+                            
+                                                
+                            <p className="label control-label text-white">Re-enter Password</p>
+                            <div className="input-group">
+                                <span className="input-group-addon"><link rel="stylesheet" href=""/><span className="fa fa-lock"></span></span>
+                                <input 
+                                    type="text" 
+                                    className="form-control is-invalid" 
+                                    name="reEnterPassword" 
+                                    value = {this.state.reEnterPassword}
+                                    placeholder="Re-enter Password"
+                                    onChange = {this.handleChange}
+                                    required
+                                />
+                                <ValidationMessage valid = {this.state.reEnterPassValid} msg = {this.state.errorMsg.reEnterPassword}/>
+                            </div>
+                            
+                            <button className="btn btn-light btn-block btn-rounded" disabled={!this.state.formValid} 
+                                    type="submit" onClick={this.handlebutton} >
+                                SIGN UP
+                            </button>
+                            <p>{this.state.responsemessage}</p>
+                            <br /> 
+                            <small className="pull-right" style={{color:"orange"}}>* Fill out all the details to signup</small>
+                            <br />
                         </div>
-                        
-                        <p className="label control-label text-white">Contact No</p>
-                        <div className="input-group">
-                            <span className="input-group-addon">
-                                <span className="fa fa-phone"></span>
-                            </span>
-                            <input 
-                                type="text" 
-                                className="form-control is-invalid"    
-                                name="number" 
-                                value = {this.state.number}
-                                placeholder="Phone"
-                                onChange = {this.handleChange}
-                                required
-                            />
-                            <ValidationMessage valid = {this.state.numberValid} msg = {this.state.errorMsg.number}/>
-                        </div>
-                        
-                        <p className="label control-label text-white">Password</p>
-                        <div className="input-group">
-                            <span className="input-group-addon"><link rel="stylesheet" href=""/><span className="fa fa-lock"></span></span>
-                            <input 
-                                type="text" 
-                                className="form-control is-invalid" 
-                                name="password"
-                                value = {this.state.password} 
-                                placeholder="Password"
-                                onChange = {this.handleChange}
-                                required
-                            />
-                            <ValidationMessage valid = {this.state.passwordValid} msg = {this.state.errorMsg.password}/>
-                        </div>
-                        
-                                            
-                        <p className="label control-label text-white">Re-enter Password</p>
-                        <div className="input-group">
-                            <span className="input-group-addon"><link rel="stylesheet" href=""/><span className="fa fa-lock"></span></span>
-                            <input 
-                                type="text" 
-                                className="form-control is-invalid" 
-                                name="reEnterPassword" 
-                                value = {this.state.reEnterPassword}
-                                placeholder="Re-enter Password"
-                                onChange = {this.handleChange}
-                                required
-                            />
-                            <ValidationMessage valid = {this.state.reEnterPassValid} msg = {this.state.errorMsg.reEnterPassword}/>
-                        </div>
-                        
-                        <button className="btn btn-light btn-block btn-rounded is-invalid" disabled={!this.state.formValid} type="submit" >
-                            SIGN UP
-                        </button>
-                        <br /> 
-                        <small className="pull-right" style={{color:"orange"}}>* Fill out all the details to signup</small>
-                        <br />
-                    </div></form>
+                    </form>
+
                     <div className="col-md-2">
                     </div>
                     <div className="col-md-5">
@@ -238,3 +260,5 @@ export default class Signup extends Component {
         )
     }
 }
+
+//disabled={!this.state.formValid} 
