@@ -1,9 +1,49 @@
 import React, { Component } from 'react'
 import '../../App.css'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 
-export default class Nav extends Component {
+class Nav extends Component {
+    logout(e){
+        e.preventDefault()
+        localStorage.removeItem('usertoken')
+        this.props.history.push('/')
+    }
+
     render() {
+
+        
+        const loginRegLink = (
+            <ul className="navbar-nav">
+                
+                <li className="nav-item">
+                    <Link to="/login" className="nav-link text-white" aria-disabled="true">
+                        Login
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/register" className="nav-link text-white" aria-disabled="true">
+                        Signup
+                    </Link>
+                </li>
+            </ul>
+        )
+
+        const userRegLink = (
+            <ul className="navbar-nav">
+                
+                <li className="nav-item">
+                    <Link to="/profile" className="nav-link text-white" aria-disabled="true">
+                        My Profile
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <a href="." onClick={this.logout.bind(this)} className="nav-link text-white" aria-disabled="true" >
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        )
+
         return (
             <div className="navclass">
                 <div className="container-fluid">
@@ -13,41 +53,25 @@ export default class Nav extends Component {
                             <span className="navbar-toggler-icon "></span>
                         </button>
 
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav mr-auto">
-                            <Link to="/">
-                                <li className="nav-item active">
-                                    <p className="nav-link text-white" >Home <span className="sr-only">(current)</span></p>
-                                </li>
-                            </Link>
-                            <li className="nav-item">
-                                <a className="nav-link text-white" href="www.google.com">Link</a>
-                            </li>
-                            <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle text-white" href="www.google.com" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Services
-                            </a>
-                            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a className="dropdown-item " href="www.google.com">Action</a>
-                                <a className="dropdown-item " href="www.google.com">Another action</a>
-                                <div className="dropdown-divider"></div>
-                                <a className="dropdown-item " href="www.google.com">Something else here</a>
-                            </div>
-                            </li>
-                            <Link to="/login">
-                                <li className="nav-item">
-                                <p className="nav-link text-white" aria-disabled="true">Login</p>
-                                </li>
-                            </Link>
-                        </ul>
-                    <form className="form-inline my-2 my-lg-0">
-                        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
-                    </div>
+                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul className="navbar-nav mr-auto">
+                                <Link to="/">
+                                    <li className="nav-item active">
+                                        <p className="nav-link text-white" >Home <span className="sr-only">(current)</span></p>
+                                    </li>
+                                </Link>
+                                {localStorage.usertoken? userRegLink : loginRegLink}
+                            </ul>
+                            <form className="form-inline my-2 my-lg-0">
+                                <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+                                <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            </form>
+                        </div>
                     </nav>
                 </div>
             </div>
         )
     }
 }
+
+export default withRouter(Nav) //whenever u use history.push to redirect to pages, use withRouter

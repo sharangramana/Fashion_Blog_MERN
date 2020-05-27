@@ -1,8 +1,37 @@
 import React, { Component } from 'react'
 import './login.css'
 import {Link} from 'react-router-dom'
+import {login} from './UserFunctions'
 
 export default class Login extends Component {
+   constructor() {
+      super()
+      this.state = {
+         Email: "",
+         Password: "",
+      }
+   }
+
+   onChange(event) {
+      this.setState({
+         [event.target.name]: event.target.value
+      })
+   }
+
+   onSubmit(event) {
+      event.preventDefault()
+      const user = {
+         Email : this.state.Email,
+         Password : this.state.Password,
+      }
+
+      login(user).then(res => {
+         if(res) {
+            this.props.history('/profile')
+         }
+      })
+   }
+
    render() {
       return (
          <div className="container box">
@@ -10,17 +39,27 @@ export default class Login extends Component {
                <div className="col">
                   <div className="col-md-5">
                      <h2 className="text-center">SIGN IN</h2>
-                     <p className="label control-label text-white">Username or E-mail</p>
+                     <p className="label control-label text-white">E-mail</p>
                      <div className="input-group">
                         <span className="input-group-addon">
                            <span className="fa fa-user"></span>
                         </span>
-                        <input type="text" className="form-control" name="email" placeholder="E-mail"/>
+                        <input type="email" 
+                              className="form-control" 
+                              name="Email" placeholder="E-mail" 
+                              value={this.state.Email}
+                              onChange={this.onChange.bind(this)} 
+                        />
                      </div>
                      <p className="label control-label text-white">Password</p>
                      <div className="input-group">
                         <span className="input-group-addon"><link rel="stylesheet" href=""/><span className="fa fa-lock"></span></span>
-                        <input type="text" className="form-control" name="password" placeholder="Password"/>
+                        <input type="password" 
+                              className="form-control" 
+                              name="Password" placeholder="Password"
+                              value={this.state.Password}
+                              onChange={this.onChange.bind(this)} 
+                        />
                      </div>  
                      <div className="row">
                         <div className="col-md-4">
@@ -31,7 +70,7 @@ export default class Login extends Component {
                            <a href="."><p className="text-right">Forget Password?</p></a>
                         </div>
                      </div>
-                     <a href="."><div className="btn btn-light btn-block">SIGN IN</div></a> <br/>
+                     <button type="submit" onSubmit={this.onSubmit.bind(this)} className="btn btn-light btn-block">SIGN IN</button> <br/>
                      <Link to="/signup">
                      <p clas="text-center">Not a member yet? Sign Up</p>
                      </Link>

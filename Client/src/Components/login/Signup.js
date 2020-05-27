@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import './login.css'
+import {register} from './UserFunctions'
 
 function ValidationMessage(props) {
     // console.log(props.valid)
     if(!props.valid) {
         return (
-            // <div class="alert alert-warning fade show" role="alert" style={{display: null}}>
-            //     {props.msg}
-            // </div>
             <div className="invalid-feedback">
                 {props.msg}
             </div>
@@ -19,53 +17,55 @@ function ValidationMessage(props) {
 export default class Signup extends Component {
 
     state = {
-        userName : "",
-        email: "",
-        number: "",
+        First_name : "",
+        Last_name: "",
+        Email: "",
+        Number: "",
         password: "",
         reEnterPassword: "",
     
         userNameValid : false,
-        emailValid: false,
+        EmailValid: false,
         passwordValid: false,
         reEnterPassValid: false,
-        numberValid: false,
+        NumberValid: false,
         formValid: false,
 
         errorMsg : {},
         responsemessage : ""
     }
 
-    // componentDidMount() {
-    //     this.handlebutton()
-    // }
 
     validateForm = () => {
         console.log(this.state);
-        const {userNameValid, emailValid, passwordValid, reEnterPassValid, numberValid} = this.state;
+        const {userNameValid, EmailValid, passwordValid, reEnterPassValid, NumberValid} = this.state;
         this.setState ({
-            formValid: userNameValid && emailValid && passwordValid && reEnterPassValid && numberValid
+            formValid: userNameValid && EmailValid && passwordValid && reEnterPassValid && NumberValid
         })
     }
 
-    handlebutton = (event) => {
-        event.preventDefault()
+    handlebutton = (e) => {
+        e.preventDefault()
 
-        fetch("http://localhost:5000/signupresponse")
-        .then(res => res.text())
-        .then(res => this.setState({responsemessage: res}))
-        .catch(err => err)
+        const user = {
+            First_name : this.state.First_name,
+            Last_name : this.state.Last_name,
+            Number : this.state.Number,
+            Email : this.state.Email,
+            Password : this.state.Password,
+        }
 
-        window.location.href = "http://localhost:3000/"
-        event.returnValue = ''
+        register(user).then(res => {
+            this.props.history('/login')
+        })
     }
 
     handleChange = (event) => {
         const{name, value} = event.target
 
-        if (name === "userName") this.validateName(value)
-        if (name === "email") this.validateEmail(value) 
-        if (name === "number") this.validateNumber(value)   
+        if (name === "First_name") this.validateName(value)
+        if (name === "Email") this.validateEmail(value) 
+        if (name === "Number") this.validateNumber(value)   
         if (name === "password") this.validatePassword(value) 
         if (name === "reEnterPassword") this.validateReEnterPassword(value) 
 
@@ -74,14 +74,14 @@ export default class Signup extends Component {
         })
     }
 
-    validateName = (userName) =>{
-        //const {userName} = this.state;
+    validateName = (First_name) =>{
+        //const {First_name} = this.state;
         let userNameValid = true;
         let errorMsg = {...this.state.errorMsg}
 
-        if(userName.length <3 || userName.length>26) {
+        if(First_name.length <3 || First_name.length>26) {
             userNameValid = false;
-            errorMsg.userName = (userName.length<3) ? 
+            errorMsg.First_name = (First_name.length<3) ? 
                                 "Must be atleast three character long" : 
                                 "Should not be greater than 26 characters ";
 
@@ -94,15 +94,15 @@ export default class Signup extends Component {
     }
 
     validateEmail = (mail) =>{
-        let emailValid = true;
+        let EmailValid = true;
         let errorMsg = {...this.state.errorMsg}
 
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)){
-            emailValid = false;
-            errorMsg.email = 'Invalid email format'
+            EmailValid = false;
+            errorMsg.Email = 'Invalid Email format'
         }
 
-        this.setState({emailValid, errorMsg}, this.validateForm)
+        this.setState({EmailValid, errorMsg}, this.validateForm)
     }
 
     validatePassword = (password) => {
@@ -122,15 +122,15 @@ export default class Signup extends Component {
         this.setState({passwordValid, errorMsg}, this.validateForm);
     }
 
-    validateNumber = (number) => {
-        let numberValid = true;
+    validateNumber = (Number) => {
+        let NumberValid = true;
         let errorMsg = {...this.state.errorMsg}
 
-        if(number.length >10 || number.length < 10) {
-            numberValid = false;
-            errorMsg.number = 'Invalid Mobile number'
+        if(Number.length >10 || Number.length < 10) {
+            NumberValid = false;
+            errorMsg.Number = 'Invalid Mobile Number'
         }
-        this.setState({numberValid, errorMsg}, this.validateForm);
+        this.setState({NumberValid, errorMsg}, this.validateForm);
     }
     
     validateReEnterPassword = (reEnterPassword) => {
@@ -156,7 +156,7 @@ export default class Signup extends Component {
                         <div className="col-md-5">
                             <h2 className="text-center">SIGN UP</h2>
 
-                            <p className="label control-label text-white">Name</p>
+                            <p className="label control-label text-white"> First Name</p>
                             <div className="input-group">
                                 <span className="input-group-addon">
                                     <span className="fa fa-user"></span>
@@ -164,16 +164,31 @@ export default class Signup extends Component {
                                 <input 
                                     type="text" 
                                     className="form-control is-invalid" 
-                                    name="userName" 
-                                    value = {this.state.userName}
-                                    placeholder="Name"
+                                    name="First_name" 
+                                    value = {this.state.First_name}
+                                    placeholder="First Name"
                                     onChange = {this.handleChange}
                                     required
                                 />
-                                <ValidationMessage valid = {this.state.userNameValid} msg = {this.state.errorMsg.userName}/>
+                                <ValidationMessage valid = {this.state.userNameValid} msg = {this.state.errorMsg.First_name}/>
                             </div>
                             
-
+                            <p className="label control-label text-white"> Last Name</p>
+                            <div className="input-group">
+                                <span className="input-group-addon">
+                                    <span className="fa fa-user"></span>
+                                </span>
+                                <input 
+                                    type="text" 
+                                    className="form-control is-invalid" 
+                                    name="Last_name" 
+                                    value = {this.state.Last_name}
+                                    placeholder="Last Name"
+                                    onChange = {this.handleChange}
+                                    required
+                                />
+                            </div>
+                            
                             <p className="label control-label text-white">E-mail</p>
                             <div className="input-group">
                                 <span className="input-group-addon">
@@ -182,13 +197,13 @@ export default class Signup extends Component {
                                 <input 
                                     type="text" 
                                     className="form-control is-invalid" 
-                                    name="email" 
-                                    value = {this.state.email}
+                                    name="Email" 
+                                    value = {this.state.Email}
                                     placeholder="E-mail"
                                     onChange= {this.handleChange}
                                     required
                                 />
-                                <ValidationMessage valid = {this.state.emailValid} msg = {this.state.errorMsg.email}/>
+                                <ValidationMessage valid = {this.state.EmailValid} msg = {this.state.errorMsg.Email}/>
                             </div>
                             
                             <p className="label control-label text-white">Contact No</p>
@@ -199,13 +214,13 @@ export default class Signup extends Component {
                                 <input 
                                     type="text" 
                                     className="form-control is-invalid"    
-                                    name="number" 
-                                    value = {this.state.number}
+                                    name="Number" 
+                                    value = {this.state.Number}
                                     placeholder="Phone"
                                     onChange = {this.handleChange}
                                     required
                                 />
-                                <ValidationMessage valid = {this.state.numberValid} msg = {this.state.errorMsg.number}/>
+                                <ValidationMessage valid = {this.state.NumberValid} msg = {this.state.errorMsg.Number}/>
                             </div>
                             
                             <p className="label control-label text-white">Password</p>
