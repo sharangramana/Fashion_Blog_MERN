@@ -12,7 +12,7 @@ export default class Profile extends Component {
     }
 
     componentDidMount() {
-        const token = localStorage.usertoken
+        const token = localStorage.usertoken 
         const decoded = jwt_decode(token)
         this.setState ({
             First_name: decoded.First_name,

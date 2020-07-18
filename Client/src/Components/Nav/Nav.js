@@ -21,7 +21,7 @@ class Nav extends Component {
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/register" className="nav-link text-white" aria-disabled="true">
+                    <Link to="/signup" className="nav-link text-white" aria-disabled="true">
                         Signup
                     </Link>
                 </li>

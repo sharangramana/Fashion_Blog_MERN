@@ -20,7 +20,7 @@ export default class Signup extends Component {
         First_name : "",
         Last_name: "",
         Email: "",
-        Number: "",
+        Mob_number: "",
         password: "",
         reEnterPassword: "",
     
@@ -50,13 +50,13 @@ export default class Signup extends Component {
         const user = {
             First_name : this.state.First_name,
             Last_name : this.state.Last_name,
-            Number : this.state.Number,
+            Mob_number : this.state.Mob_number,
             Email : this.state.Email,
-            Password : this.state.Password,
+            Password : this.state.password,
         }
 
         register(user).then(res => {
-            this.props.history('/login')
+            this.props.history.push('/login')
         })
     }
 
@@ -65,7 +65,7 @@ export default class Signup extends Component {
 
         if (name === "First_name") this.validateName(value)
         if (name === "Email") this.validateEmail(value) 
-        if (name === "Number") this.validateNumber(value)   
+        if (name === "Mob_number") this.validateNumber(value)   
         if (name === "password") this.validatePassword(value) 
         if (name === "reEnterPassword") this.validateReEnterPassword(value) 
 
@@ -128,7 +128,7 @@ export default class Signup extends Component {
 
         if(Number.length >10 || Number.length < 10) {
             NumberValid = false;
-            errorMsg.Number = 'Invalid Mobile Number'
+            errorMsg.Mob_number = 'Invalid Mobile Number'
         }
         this.setState({NumberValid, errorMsg}, this.validateForm);
     }
@@ -152,7 +152,7 @@ export default class Signup extends Component {
             <div className="container signupbox">
             <div className = "row">
                 <div className="col"> 
-                    <form >
+                    <form onSubmit={this.handlebutton} >
                         <div className="col-md-5">
                             <h2 className="text-center">SIGN UP</h2>
 
@@ -214,13 +214,13 @@ export default class Signup extends Component {
                                 <input 
                                     type="text" 
                                     className="form-control is-invalid"    
-                                    name="Number" 
-                                    value = {this.state.Number}
+                                    name="Mob_number" 
+                                    value = {this.state.Mob_number}
                                     placeholder="Phone"
                                     onChange = {this.handleChange}
                                     required
                                 />
-                                <ValidationMessage valid = {this.state.NumberValid} msg = {this.state.errorMsg.Number}/>
+                                <ValidationMessage valid = {this.state.NumberValid} msg = {this.state.errorMsg.Mob_number}/>
                             </div>
                             
                             <p className="label control-label text-white">Password</p>
@@ -255,7 +255,7 @@ export default class Signup extends Component {
                             </div>
                             
                             <button className="btn btn-light btn-block btn-rounded" disabled={!this.state.formValid} 
-                                    type="submit" onClick={this.handlebutton} >
+                                    type="submit" >
                                 SIGN UP
                             </button>
                             <p>{this.state.responsemessage}</p>

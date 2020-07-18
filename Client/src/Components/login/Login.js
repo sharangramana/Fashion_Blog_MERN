@@ -27,7 +27,7 @@ export default class Login extends Component {
 
       login(user).then(res => {
          if(res) {
-            this.props.history('/profile')
+            this.props.history.push('/profile')
          }
       })
    }
@@ -39,7 +39,7 @@ export default class Login extends Component {
                <div className="col">
                   <div className="col-md-5">
                      <h2 className="text-center">SIGN IN</h2>
-                     <p className="label control-label text-white">E-mail</p>
+                     <p className="label control-label text-white">E-mail</p><form onSubmit={this.onSubmit.bind(this)}>
                      <div className="input-group">
                         <span className="input-group-addon">
                            <span className="fa fa-user"></span>
@@ -70,10 +70,11 @@ export default class Login extends Component {
                            <a href="."><p className="text-right">Forget Password?</p></a>
                         </div>
                      </div>
-                     <button type="submit" onSubmit={this.onSubmit.bind(this)} className="btn btn-light btn-block">SIGN IN</button> <br/>
+                     <button type="submit"  className="btn btn-light btn-block">SIGN IN</button> <br/>
                      <Link to="/signup">
                      <p clas="text-center">Not a member yet? Sign Up</p>
                      </Link>
+                     </form>
                   </div>
                   <div className="col-md-2">
                   </div>
